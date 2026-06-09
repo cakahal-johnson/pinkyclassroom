@@ -26,7 +26,7 @@ function adminLogout() {
     localStorage.removeItem("quizAdminEmail");
 
     // ALWAYS safe from any admin page
-    window.location.href = "admin-login.html";
+    window.location.href = "./admin-login.html";
 }
 
 // Auto protect admin pages
