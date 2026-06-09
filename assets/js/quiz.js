@@ -95,32 +95,42 @@ let questions = [...defaultQuestions];
 
 const sampleQuestionsUrl = "./data/sample-questions.json";
 
+function safeParseJSON(value) {
+    try {
+        return JSON.parse(value);
+    } catch (error) {
+        return null;
+    }
+}
+
 async function loadSampleQuestions() {
+    const localQuestions =
+        safeParseJSON(localStorage.getItem("quizQuestions")) || [];
+
+    let fileQuestions = [];
+
     try {
         const response = await fetch(sampleQuestionsUrl);
 
-        let fileQuestions = [];
-
         if (response.ok) {
-            fileQuestions = await response.json();
+            const data = await response.json();
+            if (Array.isArray(data)) {
+                fileQuestions = data;
+            }
+        } else {
+            console.warn(`Sample questions not loaded: ${response.status} ${response.statusText}`);
         }
+    } catch (error) {
+        console.warn(`Could not fetch sample questions from ${sampleQuestionsUrl}:`, error);
+    }
 
-        const localQuestions =
-            JSON.parse(localStorage.getItem("quizQuestions")) || [];
-
-        // MERGE BOTH
+    if (fileQuestions.length > 0 || localQuestions.length > 0) {
         questions = [
             ...fileQuestions,
             ...localQuestions
         ];
-
-    } catch (error) {
-        console.warn("Could not load JSON questions:", error);
-
-        const localQuestions =
-            JSON.parse(localStorage.getItem("quizQuestions")) || [];
-
-        questions = localQuestions;
+    } else {
+        questions = [...defaultQuestions];
     }
 }
 
