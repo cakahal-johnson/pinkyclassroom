@@ -641,18 +641,18 @@
                         : "";
 
                     const questionData = {
-                        id: Date.now(),
-                        category,
-                        difficulty,
-                        question,
-                        questionType,
-                        timer,
-                        marks,
-                        options,
-                        correctAnswers,
-                        image: imageData,
-                        createdAt: new Date().toLocaleString()
-                    };
+    id: Date.now(),
+    course: category,
+    topic: difficulty,
+    question,
+    options,
+    answer: correctAnswers[0], // IMPORTANT FIX
+    type: questionType,
+    timer,
+    marks,
+    image: imageData,
+    createdAt: new Date().toLocaleString()
+};
 
                     // Save to LocalStorage
                     const existingQuestions =

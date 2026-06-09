@@ -99,18 +99,28 @@ async function loadSampleQuestions() {
     try {
         const response = await fetch(sampleQuestionsUrl);
 
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
+        let fileQuestions = [];
+
+        if (response.ok) {
+            fileQuestions = await response.json();
         }
 
-        const data = await response.json();
+        const localQuestions =
+            JSON.parse(localStorage.getItem("quizQuestions")) || [];
 
-        if (Array.isArray(data) && data.length > 0) {
-            questions = data;
-        }
+        // MERGE BOTH
+        questions = [
+            ...fileQuestions,
+            ...localQuestions
+        ];
 
     } catch (error) {
-        console.warn(`Could not load sample questions from ${sampleQuestionsUrl}:`, error);
+        console.warn("Could not load JSON questions:", error);
+
+        const localQuestions =
+            JSON.parse(localStorage.getItem("quizQuestions")) || [];
+
+        questions = localQuestions;
     }
 }
 
