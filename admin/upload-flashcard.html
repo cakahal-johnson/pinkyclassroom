@@ -1,0 +1,693 @@
+<!-- admin/upload-flashcard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Upload Flashcards - Quiz Admin</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-light">
+
+<div class="d-flex">
+
+    <!-- Sidebar -->
+    <aside class="bg-dark text-white p-3 vh-100 position-fixed"
+           style="width: 260px; overflow-y: auto;">
+
+        <!-- Logo -->
+        <div class="text-center mb-4">
+
+            <h3 class="fw-bold">
+                <i class="bi bi-shield-lock-fill me-2"></i>
+                Admin Panel
+            </h3>
+
+            <small class="text-white-50">
+                Flashcard Management
+            </small>
+
+        </div>
+
+        <hr class="border-secondary">
+
+        <!-- Navigation -->
+        <ul class="nav flex-column gap-2">
+
+            <li class="nav-item">
+                <a href="dashboard.html"
+                   class="nav-link text-white">
+
+                    <i class="bi bi-speedometer2 me-2"></i>
+                    Dashboard
+
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="upload-question.html"
+                   class="nav-link text-white">
+
+                    <i class="bi bi-cloud-upload me-2"></i>
+                    Upload Questions
+
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="manage-questions.html"
+                   class="nav-link text-white">
+
+                    <i class="bi bi-ui-checks-grid me-2"></i>
+                    Manage Questions
+
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="upload-flashcard.html"
+                   class="nav-link active bg-success text-white rounded">
+
+                    <i class="bi bi-journal-plus me-2"></i>
+                    Upload Flashcards
+
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="manage-flashcard.html"
+                   class="nav-link text-white">
+
+                    <i class="bi bi-journals me-2"></i>
+                    Manage Flashcards
+
+                </a>
+            </li>
+
+        </ul>
+
+        <!-- Logout -->
+        <div class="position-absolute bottom-0 start-0 w-100 p-3">
+
+            <hr class="border-secondary">
+
+            <button id="logoutBtn"
+                    class="btn btn-danger w-100">
+
+                <i class="bi bi-box-arrow-right me-2"></i>
+                Logout
+
+            </button>
+
+        </div>
+
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-grow-1"
+          style="margin-left: 260px;">
+
+        <!-- Topbar -->
+        <div class="bg-white shadow-sm p-3 px-4 d-flex justify-content-between align-items-center">
+
+            <div>
+
+                <h4 class="fw-bold mb-0">
+                    Upload Flashcards
+                </h4>
+
+                <small class="text-muted">
+                    Create learning flashcards for students
+                </small>
+
+            </div>
+
+            <a href="manage-flashcard.html"
+               class="btn btn-outline-success">
+
+                <i class="bi bi-journals me-2"></i>
+                Manage Flashcards
+
+            </a>
+
+        </div>
+
+        <!-- Content -->
+        <div class="container-fluid p-4">
+
+            <!-- Alert -->
+            <div id="alertBox"></div>
+
+            <!-- Flashcard Form -->
+            <div class="card border-0 shadow-sm rounded-4">
+
+                <div class="card-header bg-white border-0 p-4">
+
+                    <h5 class="fw-bold mb-0">
+                        Flashcard Information
+                    </h5>
+
+                </div>
+
+                <div class="card-body p-4">
+
+                    <form id="flashcardForm">
+
+                        <div class="row">
+
+                            <!-- Left -->
+                            <div class="col-lg-8">
+
+                                <!-- Title -->
+                                <div class="mb-4">
+
+                                    <label class="form-label fw-semibold">
+                                        Flashcard Title
+                                    </label>
+
+                                    <input type="text"
+                                           class="form-control"
+                                           id="flashcardTitle"
+                                           placeholder="Enter flashcard title..."
+                                           required>
+
+                                </div>
+
+                                <!-- Category -->
+                                <div class="mb-4">
+
+                                    <label class="form-label fw-semibold">
+                                        Category
+                                    </label>
+
+                                    <select class="form-select"
+                                            id="flashcardCategory"
+                                            required>
+
+                                        <option value="">
+                                            Select Category
+                                        </option>
+
+                                        <option value="Mathematics">
+                                            Mathematics
+                                        </option>
+
+                                        <option value="Science">
+                                            Science
+                                        </option>
+
+                                        <option value="English">
+                                            English
+                                        </option>
+
+                                        <option value="Technology">
+                                            Technology
+                                        </option>
+
+                                        <option value="General Knowledge">
+                                            General Knowledge
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+                                <!-- Front Content -->
+                                <div class="mb-4">
+
+                                    <label class="form-label fw-semibold">
+                                        Front Content
+                                    </label>
+
+                                    <textarea class="form-control"
+                                              id="frontContent"
+                                              rows="5"
+                                              placeholder="Enter question, term, or topic..."
+                                              required></textarea>
+
+                                </div>
+
+                                <!-- Back Content -->
+                                <div class="mb-4">
+
+                                    <label class="form-label fw-semibold">
+                                        Back Content
+                                    </label>
+
+                                    <textarea class="form-control"
+                                              id="backContent"
+                                              rows="5"
+                                              placeholder="Enter answer, explanation, or meaning..."
+                                              required></textarea>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Right -->
+                            <div class="col-lg-4">
+
+                                <!-- Settings -->
+                                <div class="card bg-light border-0 rounded-4 mb-4">
+
+                                    <div class="card-body">
+
+                                        <h6 class="fw-bold mb-3">
+                                            Flashcard Settings
+                                        </h6>
+
+                                        <!-- Difficulty -->
+                                        <div class="mb-4">
+
+                                            <label class="form-label fw-semibold">
+                                                Difficulty
+                                            </label>
+
+                                            <select class="form-select"
+                                                    id="difficulty">
+
+                                                <option value="Easy">
+                                                    Easy
+                                                </option>
+
+                                                <option value="Medium">
+                                                    Medium
+                                                </option>
+
+                                                <option value="Hard">
+                                                    Hard
+                                                </option>
+
+                                            </select>
+
+                                        </div>
+
+                                        <!-- Tags -->
+                                        <div class="mb-4">
+
+                                            <label class="form-label fw-semibold">
+                                                Tags
+                                            </label>
+
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="tags"
+                                                   placeholder="e.g algebra, biology">
+
+                                            <small class="text-muted">
+                                                Separate tags with commas
+                                            </small>
+
+                                        </div>
+
+                                        <!-- Status -->
+                                        <div class="mb-4">
+
+                                            <label class="form-label fw-semibold">
+                                                Status
+                                            </label>
+
+                                            <select class="form-select"
+                                                    id="status">
+
+                                                <option value="Published">
+                                                    Published
+                                                </option>
+
+                                                <option value="Draft">
+                                                    Draft
+                                                </option>
+
+                                            </select>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <!-- Image Upload -->
+                                <div class="card bg-light border-0 rounded-4">
+
+                                    <div class="card-body">
+
+                                        <h6 class="fw-bold mb-3">
+                                            Flashcard Image
+                                        </h6>
+
+                                        <input type="file"
+                                               class="form-control mb-3"
+                                               id="flashcardImage"
+                                               accept="image/*">
+
+                                        <small class="text-muted">
+                                            Optional image for flashcard
+                                        </small>
+
+                                        <!-- Preview -->
+                                        <div class="mt-3 text-center">
+
+                                            <img id="imagePreview"
+                                                 src=""
+                                                 class="img-fluid rounded d-none"
+                                                 style="max-height: 200px;">
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Preview Section -->
+                        <div class="card bg-light border-0 rounded-4 mt-4">
+
+                            <div class="card-body">
+
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+
+                                    <h5 class="fw-bold mb-0">
+                                        Live Flashcard Preview
+                                    </h5>
+
+                                    <button type="button"
+                                            class="btn btn-sm btn-outline-primary"
+                                            id="flipPreview">
+
+                                        <i class="bi bi-arrow-repeat me-1"></i>
+                                        Flip Card
+
+                                    </button>
+
+                                </div>
+
+                                <!-- Preview Card -->
+                                <div class="d-flex justify-content-center">
+
+                                    <div class="card border-0 shadow rounded-4 p-4 text-center"
+                                         id="previewCard"
+                                         style="width: 350px; min-height: 220px;">
+
+                                        <div id="previewFront">
+
+                                            <small class="text-muted d-block mb-2">
+                                                Front Side
+                                            </small>
+
+                                            <h5 id="previewFrontText">
+                                                Flashcard Front Content
+                                            </h5>
+
+                                        </div>
+
+                                        <div id="previewBack"
+                                             class="d-none">
+
+                                            <small class="text-muted d-block mb-2">
+                                                Back Side
+                                            </small>
+
+                                            <h5 id="previewBackText">
+                                                Flashcard Back Content
+                                            </h5>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="d-flex justify-content-end gap-3 mt-4">
+
+                            <button type="reset"
+                                    class="btn btn-outline-secondary px-4">
+
+                                <i class="bi bi-arrow-counterclockwise me-2"></i>
+                                Reset
+
+                            </button>
+
+                            <button type="submit"
+                                    class="btn btn-success px-5">
+
+                                <i class="bi bi-save me-2"></i>
+                                Save Flashcard
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+    // =========================
+    // AUTH CHECK
+    // =========================
+
+    const isAdminLoggedIn =
+        localStorage.getItem("quizAdminLoggedIn");
+
+    if (!isAdminLoggedIn) {
+        window.location.href = "admin-login.html";
+    }
+
+    // =========================
+    // LOGOUT
+    // =========================
+
+    document.getElementById("logoutBtn")
+        .addEventListener("click", () => {
+
+            localStorage.removeItem("quizAdminLoggedIn");
+            localStorage.removeItem("quizAdminEmail");
+
+            window.location.href = "admin-login.html";
+
+        });
+
+    // =========================
+    // LIVE PREVIEW
+    // =========================
+
+    const frontContent =
+        document.getElementById("frontContent");
+
+    const backContent =
+        document.getElementById("backContent");
+
+    const previewFrontText =
+        document.getElementById("previewFrontText");
+
+    const previewBackText =
+        document.getElementById("previewBackText");
+
+    frontContent.addEventListener("input", () => {
+
+        previewFrontText.textContent =
+            frontContent.value || "Flashcard Front Content";
+
+    });
+
+    backContent.addEventListener("input", () => {
+
+        previewBackText.textContent =
+            backContent.value || "Flashcard Back Content";
+
+    });
+
+    // =========================
+    // FLIP PREVIEW
+    // =========================
+
+    const previewFront =
+        document.getElementById("previewFront");
+
+    const previewBack =
+        document.getElementById("previewBack");
+
+    document.getElementById("flipPreview")
+        .addEventListener("click", () => {
+
+            previewFront.classList.toggle("d-none");
+            previewBack.classList.toggle("d-none");
+
+        });
+
+    // =========================
+    // IMAGE PREVIEW
+    // =========================
+
+    document.getElementById("flashcardImage")
+        .addEventListener("change", function(e) {
+
+            const file = e.target.files[0];
+
+            if (!file) return;
+
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+
+                const imagePreview =
+                    document.getElementById("imagePreview");
+
+                imagePreview.src = event.target.result;
+
+                imagePreview.classList.remove("d-none");
+
+            };
+
+            reader.readAsDataURL(file);
+
+        });
+
+    // =========================
+    // SAVE FLASHCARD
+    // =========================
+
+    document.getElementById("flashcardForm")
+        .addEventListener("submit", function(e) {
+
+            e.preventDefault();
+
+            const title =
+                document.getElementById("flashcardTitle").value;
+
+            const category =
+                document.getElementById("flashcardCategory").value;
+
+            const front =
+                document.getElementById("frontContent").value;
+
+            const back =
+                document.getElementById("backContent").value;
+
+            const difficulty =
+                document.getElementById("difficulty").value;
+
+            const tags =
+                document.getElementById("tags").value;
+
+            const status =
+                document.getElementById("status").value;
+
+            const imageFile =
+                document.getElementById("flashcardImage").files[0];
+
+            const reader = new FileReader();
+
+            reader.onload = function() {
+
+                const imageData =
+                    imageFile ? reader.result : "";
+
+                const flashcard = {
+
+                    id: Date.now(),
+
+                    title,
+                    category,
+                    front,
+                    back,
+                    difficulty,
+                    tags,
+                    status,
+
+                    image: imageData,
+
+                    createdAt:
+                        new Date().toLocaleString()
+
+                };
+
+                // Existing Flashcards
+                const flashcards =
+                    JSON.parse(
+                        localStorage.getItem("quizFlashcards")
+                    ) || [];
+
+                flashcards.push(flashcard);
+
+                localStorage.setItem(
+                    "quizFlashcards",
+                    JSON.stringify(flashcards)
+                );
+
+                // Success Alert
+                document.getElementById("alertBox")
+                    .innerHTML = `
+                        <div class="alert alert-success alert-dismissible fade show">
+
+                            <i class="bi bi-check-circle-fill me-2"></i>
+
+                            Flashcard uploaded successfully!
+
+                            <button type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="alert"></button>
+
+                        </div>
+                    `;
+
+                // Reset
+                document.getElementById("flashcardForm")
+                    .reset();
+
+                document.getElementById("imagePreview")
+                    .classList.add("d-none");
+
+                previewFrontText.textContent =
+                    "Flashcard Front Content";
+
+                previewBackText.textContent =
+                    "Flashcard Back Content";
+
+            };
+
+            if (imageFile) {
+
+                reader.readAsDataURL(imageFile);
+
+            } else {
+
+                reader.onload();
+
+            }
+
+        });
+
+</script>
+
+</body>
+</html>

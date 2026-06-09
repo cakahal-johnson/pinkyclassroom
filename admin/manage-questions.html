@@ -1,0 +1,895 @@
+<!-- admin/manage-questions.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Manage Questions - Quiz Admin</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-light">
+
+<div class="d-flex">
+
+    <!-- Sidebar -->
+    <aside class="bg-dark text-white p-3 vh-100 position-fixed"
+           style="width: 260px; overflow-y: auto;">
+
+        <div class="text-center mb-4">
+
+            <h3 class="fw-bold">
+                <i class="bi bi-shield-lock-fill me-2"></i>
+                Admin Panel
+            </h3>
+
+            <small class="text-white-50">
+                Quiz Management System
+            </small>
+
+        </div>
+
+        <hr class="border-secondary">
+
+        <!-- Navigation -->
+        <ul class="nav flex-column gap-2">
+
+            <li class="nav-item">
+                <a href="dashboard.html"
+                   class="nav-link text-white">
+
+                    <i class="bi bi-speedometer2 me-2"></i>
+                    Dashboard
+
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="upload-question.html"
+                   class="nav-link text-white">
+
+                    <i class="bi bi-cloud-upload me-2"></i>
+                    Upload Questions
+
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="manage-questions.html"
+                   class="nav-link active bg-primary text-white rounded">
+
+                    <i class="bi bi-ui-checks-grid me-2"></i>
+                    Manage Questions
+
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="upload-flashcard.html"
+                   class="nav-link text-white">
+
+                    <i class="bi bi-journal-plus me-2"></i>
+                    Upload Flashcards
+
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="manage-flashcard.html"
+                   class="nav-link text-white">
+
+                    <i class="bi bi-journals me-2"></i>
+                    Manage Flashcards
+
+                </a>
+            </li>
+
+        </ul>
+
+        <!-- Logout -->
+        <div class="position-absolute bottom-0 start-0 w-100 p-3">
+
+            <hr class="border-secondary">
+
+            <button id="logoutBtn"
+                    class="btn btn-danger w-100">
+
+                <i class="bi bi-box-arrow-right me-2"></i>
+                Logout
+
+            </button>
+
+        </div>
+
+    </aside>
+
+    <!-- Main -->
+    <main class="flex-grow-1"
+          style="margin-left: 260px;">
+
+        <!-- Topbar -->
+        <div class="bg-white shadow-sm p-3 px-4 d-flex justify-content-between align-items-center">
+
+            <div>
+
+                <h4 class="fw-bold mb-0">
+                    Manage Questions
+                </h4>
+
+                <small class="text-muted">
+                    View, edit, search, and delete quiz questions
+                </small>
+
+            </div>
+
+            <a href="upload-question.html"
+               class="btn btn-primary">
+
+                <i class="bi bi-plus-circle me-2"></i>
+                Add New Question
+
+            </a>
+
+        </div>
+
+        <!-- Content -->
+        <div class="container-fluid p-4">
+
+            <!-- Alerts -->
+            <div id="alertBox"></div>
+
+            <!-- Stats -->
+            <div class="row g-4 mb-4">
+
+                <div class="col-md-4">
+
+                    <div class="card border-0 shadow-sm rounded-4">
+
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between align-items-center">
+
+                                <div>
+
+                                    <small class="text-muted">
+                                        Total Questions
+                                    </small>
+
+                                    <h2 class="fw-bold mb-0"
+                                        id="questionCount">
+                                        0
+                                    </h2>
+
+                                </div>
+
+                                <div class="bg-primary bg-opacity-10 p-3 rounded-circle">
+
+                                    <i class="bi bi-question-circle fs-2 text-primary"></i>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="card border-0 shadow-sm rounded-4">
+
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between align-items-center">
+
+                                <div>
+
+                                    <small class="text-muted">
+                                        Categories
+                                    </small>
+
+                                    <h2 class="fw-bold mb-0"
+                                        id="categoryCount">
+                                        0
+                                    </h2>
+
+                                </div>
+
+                                <div class="bg-success bg-opacity-10 p-3 rounded-circle">
+
+                                    <i class="bi bi-grid fs-2 text-success"></i>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="card border-0 shadow-sm rounded-4">
+
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between align-items-center">
+
+                                <div>
+
+                                    <small class="text-muted">
+                                        Difficulties
+                                    </small>
+
+                                    <h2 class="fw-bold mb-0">
+                                        3
+                                    </h2>
+
+                                </div>
+
+                                <div class="bg-warning bg-opacity-10 p-3 rounded-circle">
+
+                                    <i class="bi bi-bar-chart fs-2 text-warning"></i>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Filters -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+
+                <div class="card-body">
+
+                    <div class="row g-3">
+
+                        <!-- Search -->
+                        <div class="col-lg-5">
+
+                            <label class="form-label fw-semibold">
+                                Search Question
+                            </label>
+
+                            <input type="text"
+                                   class="form-control"
+                                   id="searchInput"
+                                   placeholder="Search by question text...">
+
+                        </div>
+
+                        <!-- Category -->
+                        <div class="col-lg-3">
+
+                            <label class="form-label fw-semibold">
+                                Filter by Category
+                            </label>
+
+                            <select class="form-select"
+                                    id="categoryFilter">
+
+                                <option value="">
+                                    All Categories
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <!-- Difficulty -->
+                        <div class="col-lg-2">
+
+                            <label class="form-label fw-semibold">
+                                Difficulty
+                            </label>
+
+                            <select class="form-select"
+                                    id="difficultyFilter">
+
+                                <option value="">
+                                    All
+                                </option>
+
+                                <option value="Easy">
+                                    Easy
+                                </option>
+
+                                <option value="Medium">
+                                    Medium
+                                </option>
+
+                                <option value="Hard">
+                                    Hard
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <!-- Reset -->
+                        <div class="col-lg-2 d-flex align-items-end">
+
+                            <button class="btn btn-outline-secondary w-100"
+                                    id="resetFilters">
+
+                                <i class="bi bi-arrow-clockwise me-2"></i>
+                                Reset
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Questions Table -->
+            <div class="card border-0 shadow-sm rounded-4">
+
+                <div class="card-header bg-white border-0 p-4 d-flex justify-content-between align-items-center">
+
+                    <h5 class="fw-bold mb-0">
+                        Uploaded Questions
+                    </h5>
+
+                    <span class="badge bg-primary"
+                          id="tableCount">
+                        0 Questions
+                    </span>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+
+                        <table class="table align-middle">
+
+                            <thead class="table-light">
+
+                            <tr>
+
+                                <th>#</th>
+                                <th>Question</th>
+                                <th>Category</th>
+                                <th>Difficulty</th>
+                                <th>Type</th>
+                                <th>Marks</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+
+                            </tr>
+
+                            </thead>
+
+                            <tbody id="questionsTableBody">
+
+                            <!-- Dynamic Content -->
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <!-- Empty State -->
+                    <div id="emptyState"
+                         class="text-center py-5 d-none">
+
+                        <i class="bi bi-inbox display-1 text-muted"></i>
+
+                        <h4 class="mt-3">
+                            No Questions Found
+                        </h4>
+
+                        <p class="text-muted">
+                            Upload questions to start building quizzes.
+                        </p>
+
+                        <a href="upload-question.html"
+                           class="btn btn-primary">
+
+                            <i class="bi bi-plus-circle me-2"></i>
+                            Upload Question
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<!-- View Modal -->
+<div class="modal fade"
+     id="viewQuestionModal"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+
+        <div class="modal-content border-0 rounded-4">
+
+            <div class="modal-header border-0">
+
+                <h5 class="modal-title fw-bold">
+                    Question Details
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"></button>
+
+            </div>
+
+            <div class="modal-body"
+                 id="modalContent">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+    // =========================
+    // AUTH CHECK
+    // =========================
+
+    const isAdminLoggedIn =
+        localStorage.getItem("quizAdminLoggedIn");
+
+    if (!isAdminLoggedIn) {
+        window.location.href = "admin-login.html";
+    }
+
+    // =========================
+    // LOGOUT
+    // =========================
+
+    document.getElementById("logoutBtn")
+        .addEventListener("click", () => {
+
+            localStorage.removeItem("quizAdminLoggedIn");
+            localStorage.removeItem("quizAdminEmail");
+
+            window.location.href = "admin-login.html";
+        });
+
+    // =========================
+    // LOAD QUESTIONS
+    // =========================
+
+    let questions =
+        JSON.parse(
+            localStorage.getItem("quizQuestions")
+        ) || [];
+
+    const tableBody =
+        document.getElementById("questionsTableBody");
+
+    const emptyState =
+        document.getElementById("emptyState");
+
+    // =========================
+    // RENDER QUESTIONS
+    // =========================
+
+    function renderQuestions(data) {
+
+        tableBody.innerHTML = "";
+
+        document.getElementById("tableCount")
+            .textContent =
+            `${data.length} Questions`;
+
+        document.getElementById("questionCount")
+            .textContent =
+            data.length;
+
+        // Categories Count
+        const categories =
+            [...new Set(data.map(q => q.category))];
+
+        document.getElementById("categoryCount")
+            .textContent =
+            categories.length;
+
+        // Populate Categories
+        const categoryFilter =
+            document.getElementById("categoryFilter");
+
+        categoryFilter.innerHTML =
+            `<option value="">All Categories</option>`;
+
+        categories.forEach(category => {
+
+            categoryFilter.innerHTML += `
+                <option value="${category}">
+                    ${category}
+                </option>
+            `;
+
+        });
+
+        // Empty
+        if (data.length === 0) {
+
+            emptyState.classList.remove("d-none");
+
+            return;
+
+        }
+
+        emptyState.classList.add("d-none");
+
+        // Table
+        data.forEach((question, index) => {
+
+            tableBody.innerHTML += `
+                <tr>
+
+                    <td>
+                        ${index + 1}
+                    </td>
+
+                    <td style="min-width: 250px;">
+
+                        <div class="fw-semibold">
+                            ${question.question.substring(0, 80)}...
+                        </div>
+
+                    </td>
+
+                    <td>
+
+                        <span class="badge bg-primary">
+                            ${question.category}
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <span class="badge
+                            ${
+                                question.difficulty === "Easy"
+                                ? "bg-success"
+                                : question.difficulty === "Medium"
+                                ? "bg-warning text-dark"
+                                : "bg-danger"
+                            }">
+
+                            ${question.difficulty}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        ${
+                            question.questionType === "multiple"
+                            ? "Multiple"
+                            : "Single"
+                        }
+
+                    </td>
+
+                    <td>
+                        ${question.marks}
+                    </td>
+
+                    <td>
+                        ${question.createdAt || "-"}
+                    </td>
+
+                    <td>
+
+                        <div class="d-flex gap-2">
+
+                            <button class="btn btn-sm btn-info text-white"
+                                    onclick="viewQuestion(${question.id})">
+
+                                <i class="bi bi-eye"></i>
+
+                            </button>
+
+                            <button class="btn btn-sm btn-warning text-dark"
+                                    onclick="editQuestion(${question.id})">
+
+                                <i class="bi bi-pencil"></i>
+
+                            </button>
+
+                            <button class="btn btn-sm btn-danger"
+                                    onclick="deleteQuestion(${question.id})">
+
+                                <i class="bi bi-trash"></i>
+
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+            `;
+
+        });
+
+    }
+
+    // =========================
+    // VIEW QUESTION
+    // =========================
+
+    function viewQuestion(id) {
+
+        const question =
+            questions.find(q => q.id === id);
+
+        if (!question) return;
+
+        let optionsHTML = "";
+
+        question.options.forEach(option => {
+
+            const isCorrect =
+                question.correctAnswers.includes(option);
+
+            optionsHTML += `
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                    ${option}
+
+                    ${
+                        isCorrect
+                        ? `
+                            <span class="badge bg-success">
+                                Correct
+                            </span>
+                        `
+                        : ""
+                    }
+
+                </li>
+            `;
+
+        });
+
+        document.getElementById("modalContent")
+            .innerHTML = `
+
+            <div class="mb-4">
+
+                <span class="badge bg-primary">
+                    ${question.category}
+                </span>
+
+                <span class="badge bg-secondary">
+                    ${question.difficulty}
+                </span>
+
+            </div>
+
+            <h5 class="fw-bold mb-3">
+                ${question.question}
+            </h5>
+
+            ${
+                question.image
+                ? `
+                    <img src="${question.image}"
+                         class="img-fluid rounded mb-4">
+                `
+                : ""
+            }
+
+            <div class="row mb-4">
+
+                <div class="col-md-4">
+                    <strong>Question Type:</strong>
+                    <br>
+                    ${question.questionType}
+                </div>
+
+                <div class="col-md-4">
+                    <strong>Marks:</strong>
+                    <br>
+                    ${question.marks}
+                </div>
+
+                <div class="col-md-4">
+                    <strong>Timer:</strong>
+                    <br>
+                    ${question.timer}s
+                </div>
+
+            </div>
+
+            <h6 class="fw-bold">
+                Options
+            </h6>
+
+            <ul class="list-group">
+                ${optionsHTML}
+            </ul>
+
+        `;
+
+        new bootstrap.Modal(
+            document.getElementById("viewQuestionModal")
+        ).show();
+
+    }
+
+    // =========================
+    // DELETE QUESTION
+    // =========================
+
+    function deleteQuestion(id) {
+
+        const confirmDelete =
+            confirm("Delete this question permanently?");
+
+        if (!confirmDelete) return;
+
+        questions =
+            questions.filter(q => q.id !== id);
+
+        localStorage.setItem(
+            "quizQuestions",
+            JSON.stringify(questions)
+        );
+
+        renderQuestions(questions);
+
+        document.getElementById("alertBox")
+            .innerHTML = `
+                <div class="alert alert-success alert-dismissible fade show">
+
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    Question deleted successfully.
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="alert"></button>
+
+                </div>
+            `;
+
+    }
+
+    // =========================
+    // EDIT QUESTION
+    // =========================
+
+    function editQuestion(id) {
+
+        const question =
+            questions.find(q => q.id === id);
+
+        if (!question) return;
+
+        localStorage.setItem(
+            "editingQuestion",
+            JSON.stringify(question)
+        );
+
+        window.location.href =
+            "upload-question.html?edit=" + id;
+
+    }
+
+    // =========================
+    // FILTERS
+    // =========================
+
+    function applyFilters() {
+
+        const search =
+            document.getElementById("searchInput")
+            .value.toLowerCase();
+
+        const category =
+            document.getElementById("categoryFilter")
+            .value;
+
+        const difficulty =
+            document.getElementById("difficultyFilter")
+            .value;
+
+        const filtered =
+            questions.filter(q => {
+
+                const matchesSearch =
+                    q.question
+                    .toLowerCase()
+                    .includes(search);
+
+                const matchesCategory =
+                    category
+                    ? q.category === category
+                    : true;
+
+                const matchesDifficulty =
+                    difficulty
+                    ? q.difficulty === difficulty
+                    : true;
+
+                return (
+                    matchesSearch &&
+                    matchesCategory &&
+                    matchesDifficulty
+                );
+
+            });
+
+        renderQuestions(filtered);
+
+    }
+
+    // Event Listeners
+    document.getElementById("searchInput")
+        .addEventListener("input", applyFilters);
+
+    document.getElementById("categoryFilter")
+        .addEventListener("change", applyFilters);
+
+    document.getElementById("difficultyFilter")
+        .addEventListener("change", applyFilters);
+
+    // Reset Filters
+    document.getElementById("resetFilters")
+        .addEventListener("click", () => {
+
+            document.getElementById("searchInput").value = "";
+            document.getElementById("categoryFilter").value = "";
+            document.getElementById("difficultyFilter").value = "";
+
+            renderQuestions(questions);
+
+        });
+
+    // =========================
+    // INITIAL LOAD
+    // =========================
+
+    renderQuestions(questions);
+
+</script>
+
+</body>
+</html>

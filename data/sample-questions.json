@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "course": "BIO100",
+    "topic": "Cell Biology",
+    "question": "What is the basic structural and functional unit of life?",
+    "options": [
+      "Tissue",
+      "Organ",
+      "Cell",
+      "Organ system"
+    ],
+    "answer": "Cell",
+    "type": "single",
+    "image": null
+  },
+  {
+    "id": 2,
+    "course": "BIO100",
+    "topic": "Cell Membrane",
+    "question": "Which part of the cell controls what enters and leaves the cell?",
+    "options": [
+      "Nucleus",
+      "Cell membrane",
+      "Cytoplasm",
+      "Mitochondria"
+    ],
+    "answer": "Cell membrane",
+    "type": "single",
+    "image": null
+  },
+  {
+    "id": 3,
+    "course": "BIO100",
+    "topic": "Human Physiology",
+    "question": "What is the primary function of red blood cells?",
+    "options": [
+      "Fight infection",
+      "Transport oxygen",
+      "Produce hormones",
+      "Digest food"
+    ],
+    "answer": "Transport oxygen",
+    "type": "single",
+    "image": null
+  },
+  {
+    "id": 4,
+    "course": "BIO100",
+    "topic": "Digestive System",
+    "question": "Where does most nutrient absorption occur in the human body?",
+    "options": [
+      "Stomach",
+      "Large intestine",
+      "Small intestine",
+      "Esophagus"
+    ],
+    "answer": "Small intestine",
+    "type": "single",
+    "image": null
+  },
+  {
+    "id": 5,
+    "course": "BIO100",
+    "topic": "Nervous System",
+    "question": "Which part of the brain controls balance and coordination?",
+    "options": [
+      "Cerebrum",
+      "Cerebellum",
+      "Medulla oblongata",
+      "Hypothalamus"
+    ],
+    "answer": "Cerebellum",
+    "type": "single",
+    "image": null
+  },
+  {
+    "id": 6,
+    "course": "BIO100",
+    "topic": "Circulatory System",
+    "question": "Which blood vessel carries oxygenated blood away from the heart?",
+    "options": [
+      "Veins",
+      "Capillaries",
+      "Arteries",
+      "Venules"
+    ],
+    "answer": "Arteries",
+    "type": "single",
+    "image": null
+  },
+  {
+    "id": 7,
+    "course": "BIO100",
+    "topic": "Respiratory System",
+    "question": "What is the main site of gas exchange in the lungs?",
+    "options": [
+      "Bronchi",
+      "Trachea",
+      "Alveoli",
+      "Diaphragm"
+    ],
+    "answer": "Alveoli",
+    "type": "single",
+    "image": null
+  },
+  {
+    "id": 8,
+    "course": "BIO100",
+    "topic": "Endocrine System",
+    "question": "Which gland produces insulin?",
+    "options": [
+      "Thyroid",
+      "Pancreas",
+      "Pituitary",
+      "Adrenal"
+    ],
+    "answer": "Pancreas",
+    "type": "single",
+    "image": null
+  },
+  {
+    "id": 9,
+    "course": "BIO100",
+    "topic": "Excretory System",
+    "question": "What is the functional unit of the kidney?",
+    "options": [
+      "Neuron",
+      "Nephron",
+      "Alveoli",
+      "Glomerulus"
+    ],
+    "answer": "Nephron",
+    "type": "single",
+    "image": null
+  },
+  {
+    "id": 10,
+    "course": "BIO100",
+    "topic": "Homeostasis",
+    "question": "What is homeostasis?",
+    "options": [
+      "Breakdown of food",
+      "Maintenance of stable internal environment",
+      "Cell division",
+      "Protein synthesis"
+    ],
+    "answer": "Maintenance of stable internal environment",
+    "type": "single",
+    "image": null
+  }
+]
