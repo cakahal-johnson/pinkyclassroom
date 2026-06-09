@@ -91,47 +91,82 @@ const defaultQuestions = [
 
 ];
 
-let questions = [...defaultQuestions];
+let questions = [];
 
-const sampleQuestionsUrl = "./data/sample-questions.json";
-
-function safeParseJSON(value) {
-    try {
-        return JSON.parse(value);
-    } catch (error) {
-        return null;
-    }
-}
+const sampleQuestionsUrl =
+    "./data/sample-questions.json";
 
 async function loadSampleQuestions() {
-    const localQuestions =
-        safeParseJSON(localStorage.getItem("quizQuestions")) || [];
 
     let fileQuestions = [];
+    let localQuestions = [];
 
     try {
-        const response = await fetch(sampleQuestionsUrl);
+
+        const response =
+            await fetch(sampleQuestionsUrl);
 
         if (response.ok) {
-            const data = await response.json();
-            if (Array.isArray(data)) {
-                fileQuestions = data;
-            }
-        } else {
-            console.warn(`Sample questions not loaded: ${response.status} ${response.statusText}`);
+
+            fileQuestions =
+                await response.json();
+
+            console.log(
+                "Sample questions loaded:",
+                fileQuestions.length
+            );
+
         }
+
     } catch (error) {
-        console.warn(`Could not fetch sample questions from ${sampleQuestionsUrl}:`, error);
+
+        console.error(
+            "JSON load failed:",
+            error
+        );
+
     }
 
-    if (fileQuestions.length > 0 || localQuestions.length > 0) {
-        questions = [
-            ...fileQuestions,
-            ...localQuestions
-        ];
-    } else {
-        questions = [...defaultQuestions];
+    try {
+
+        localQuestions =
+            JSON.parse(
+                localStorage.getItem("quizQuestions")
+            ) || [];
+
+        console.log(
+            "Admin questions loaded:",
+            localQuestions.length
+        );
+
+    } catch (error) {
+
+        console.error(
+            "LocalStorage error:",
+            error
+        );
+
     }
+
+    questions = [
+        ...fileQuestions,
+        ...localQuestions
+    ];
+
+    if (questions.length === 0) {
+
+        questions =
+            [...defaultQuestions];
+
+        console.warn(
+            "Using fallback questions"
+        );
+    }
+
+    console.log(
+        "Total Questions:",
+        questions.length
+    );
 }
 
 
@@ -311,23 +346,24 @@ function loadQuestion() {
 // ==========================
 // INIT QUIZ
 // ==========================
-
 async function initQuiz() {
 
     await loadSampleQuestions();
 
-    console.log("Loaded Questions:", questions);
-
     if (!questions || questions.length === 0) {
 
         questionText.textContent =
-            "No questions found.";
+            "No questions available.";
 
         return;
     }
 
+    totalQuestions.textContent =
+        questions.length;
+
     loadQuestion();
 }
+
 
 document.addEventListener(
     "DOMContentLoaded",
@@ -466,14 +502,6 @@ document
 // START
 // ==========================
 
-async function initQuiz() {
-    await loadSampleQuestions();
 
-    if (totalQuestions) {
-        totalQuestions.textContent = questions.length;
-    }
-
-    loadQuestion();
-}
 
 document.addEventListener("DOMContentLoaded", initQuiz);
