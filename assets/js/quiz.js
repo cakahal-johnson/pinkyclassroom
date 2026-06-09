@@ -210,45 +210,27 @@ totalQuestions.textContent =
 // LOAD QUESTION
 // ==========================
 
-function loadQuestion(){
+function loadQuestion() {
 
-    if (!Array.isArray(questions) || questions.length === 0) {
-        console.warn("No quiz questions available.");
+    if (!questions || questions.length === 0) {
 
-        if (questionText) {
-            questionText.textContent =
-                "No questions available.";
-        }
+        questionText.textContent =
+            "No questions available.";
 
-        if (optionsContainer) {
-            optionsContainer.innerHTML = "";
-        }
-
-        if (currentQuestionNumber) {
-            currentQuestionNumber.textContent = "0";
-        }
-
-        if (quizProgress) {
-            quizProgress.style.width = "0%";
-        }
-
-        if (nextBtn) {
-            nextBtn.disabled = true;
-        }
-
-        if (prevBtn) {
-            prevBtn.disabled = true;
-        }
+        optionsContainer.innerHTML = "";
 
         return;
     }
 
-    const q =
-        questions[currentQuestion];
+    const q = questions[currentQuestion];
 
     // QUESTION
     questionText.textContent =
-        q.question;
+        q.question || "Question missing";
+
+    // TOTAL
+    totalQuestions.textContent =
+        questions.length;
 
     // NUMBER
     currentQuestionNumber.textContent =
@@ -262,13 +244,13 @@ function loadQuestion(){
         progress + "%";
 
     // IMAGE
-    if(q.image){
+    if (q.image) {
 
         questionImageContainer.classList.remove("d-none");
 
         questionImage.src = q.image;
 
-    }else{
+    } else {
 
         questionImageContainer.classList.add("d-none");
 
@@ -277,57 +259,80 @@ function loadQuestion(){
     // OPTIONS
     optionsContainer.innerHTML = "";
 
-    q.options.forEach((option, index) => {
+    if (Array.isArray(q.options)) {
 
-        const isSelected =
-            selectedAnswers[currentQuestion] === option;
+        q.options.forEach((option, index) => {
 
-        optionsContainer.innerHTML += `
+            const isSelected =
+                selectedAnswers[currentQuestion] === option;
 
-            <div
-                class="option-card ${isSelected ? "active" : ""}"
-                onclick="selectAnswer('${option}')">
+            optionsContainer.innerHTML += `
 
-                <div class="option-circle">
+                <div
+                    class="option-card ${isSelected ? "active" : ""}"
+                    onclick="selectAnswer('${option.replace(/'/g, "\\'")}')">
 
-                    ${String.fromCharCode(65 + index)}
+                    <div class="option-circle">
+                        ${String.fromCharCode(65 + index)}
+                    </div>
+
+                    <div>
+                        ${option}
+                    </div>
 
                 </div>
 
-                <div>
+            `;
+        });
 
-                    ${option}
-
-                </div>
-
-            </div>
-
-        `;
-
-    });
+    }
 
     // BUTTONS
     prevBtn.disabled =
         currentQuestion === 0;
 
-    if(currentQuestion === questions.length - 1){
+    if (currentQuestion === questions.length - 1) {
 
         nextBtn.innerHTML = `
             Submit Quiz
             <i class="bi bi-check-circle-fill"></i>
         `;
 
-    }else{
+    } else {
 
         nextBtn.innerHTML = `
             Next
             <i class="bi bi-arrow-right"></i>
         `;
-
     }
-
 }
 
+
+// ==========================
+// INIT QUIZ
+// ==========================
+
+async function initQuiz() {
+
+    await loadSampleQuestions();
+
+    console.log("Loaded Questions:", questions);
+
+    if (!questions || questions.length === 0) {
+
+        questionText.textContent =
+            "No questions found.";
+
+        return;
+    }
+
+    loadQuestion();
+}
+
+document.addEventListener(
+    "DOMContentLoaded",
+    initQuiz
+);
 
 // ==========================
 // SELECT ANSWER
